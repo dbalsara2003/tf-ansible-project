@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Gets public ip of ec2 instance
+ip_a=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+
+# BookStack installation Directory
+BOOKSTACK_DIR="/var/www/bookstack"
+
+# Run script as sudo
+SCRIPT_USER="${SUDO_USER:-$USER}"
+
+endpoint=$RDS_ENDPOINT
+
+#make sure to run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
+
+
+#install pkgs
+function run_package_installs() {
+    apt-get update 
+    apt-get install -y git nginx curl unzip mysql-client php8.1-fpm php8.1-mysql php8.1-mbstring php8.1-gd php8.1-curl php8.1-ldap php8.1-mbstring php8.1-xml
+}
+
+#download bookstack
+function run_bookstack_download() {
+  cd /var/www || exit
+  git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch bookstack
+}
+
+#install composer
+function run_install_composer() {
+  EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+
+  if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]
+  then
+      >&2 echo 'ERROR: Invalid composer installer checksum'
+      rm composer-setup.php
+      exit 1
+  fi
+
+  php composer-setup.php --quiet
+  rm composer-setup.php
+
+  # Move composer to global installation
+  mv composer.phar /usr/local/bin/composer
+}
+
+#install bookstack composer dependencies
+function run_install_bookstack_composer_deps() {
+  cd "$BOOKSTACK_DIR" || exit
+  export COMPOSER_ALLOW_SUPERUSER=1
+  php /usr/local/bin/composer install --no-dev --no-plugins
+}
+
+function run_update_bookstack_env() {
+    ENDPOINT=$1
+    cd "$BOOKSTACK_DIR" || exit
+    cp .env.example .env
+    sed -i.bak "s/DB_HOST=localhost/DB_HOST=$endpoint/g" .env
+    sed -i.bak "s@APP_URL=.*\$@APP_URL=http://$ip_a/@" .env
+    sed -i.bak 's/DB_DATABASE=.*$/DB_DATABASE=bookstack/' .env
+    sed -i.bak 's/DB_USERNAME=.*$/DB_USERNAME=bookstack/' .env
+    sed -i.bak "s/DB_PASSWORD=.*\$/DB_PASSWORD=password/" .env
+
+    php artisan key:generate --no-interaction --force
+}
+
+function run_bookstack_database_migrations() {
+  cd "$BOOKSTACK_DIR" || exit
+  php artisan migrate --no-interaction --force
+}
+
+function run_set_application_file_permissions() {
+  cd "$BOOKSTACK_DIR" || exit
+  chown -R "$SCRIPT_USER":www-data ./
+  chmod -R 755 ./
+  chmod -R 775 bootstrap/cache public/uploads storage
+  chmod 740 .env
+
+  # Tell git to ignore permission changes
+  git config core.fileMode false
+}
+
+function run_configure_nginx {
+    cat >/etc/nginx/sites-available/bookstack <<EOL
+    server { 
+      listen 80;
+      listen [::]:80;
+
+      server_name http://$ip_a/;
+
+      root /var/www/bookstack/public;
+      index index.php index.html;
+
+      location / {
+        try_files \$uri \$uri/ /index.php?\$query_string;
+      }
+      
+      location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+      }
+    }
+EOL
+
+    ln -s /etc/nginx/sites-available/bookstack /etc/nginx/sites-enabled/
+    rm /etc/nginx/sites-enabled/default
+
+    systemctl restart nginx
+}
+
+echo "Installing required system packages (This may take several minutes)"
+run_package_installs
+echo "Downloading BookStack to $BOOKSTACK_DIR"
+run_bookstack_download
+echo "Installing Composer (PHP dependency manager)"
+run_install_composer
+echo "Installing PHP dependencies using composer"
+run_install_bookstack_composer_deps
+echo "Creating and populating BookStack .env file"
+run_update_bookstack_env
+echo "Running initial BookStack database migrations"
+run_bookstack_database_migrations
+echo "Setting BookStack file & folder permissions"
+run_set_application_file_permissions
+echo "Configuring nginx server"
+run_configure_nginx
+
+
+echo "BookStack has been installed and configured."
+echo "Setup finished, your BookStack instance should now be installed!"
+echo "Default login email: admin@admin.com"
+echo "Default login password: password"
+echo "You can access it at http://$ip_a"
+

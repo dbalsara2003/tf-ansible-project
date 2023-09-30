@@ -1,0 +1,113 @@
+#!/bin/bash
+
+# Create vpc
+vpc_id=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=assign2_VPC}]' --query 'Vpc.VpcId' --output text)
+echo "Created VPC: $vpc_id"
+
+# Create public subnet
+public_subnet_id=$(aws ec2 create-subnet --vpc-id $vpc_id --cidr-block 10.0.1.0/24 --availability-zone us-west-2a --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=assign2_public_Subnet}]' --query 'Subnet.SubnetId' --output text)
+echo "Created public subnet: $public_subnet_id"
+
+# Create private subnets
+private_subnet_1_id=$(aws ec2 create-subnet --vpc-id $vpc_id --cidr-block 10.0.2.0/24 --availability-zone us-west-2b --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=assign2_private_Subnet1}]' --query 'Subnet.SubnetId' --output text)
+echo "Created private subnet 1: $private_subnet_1_id"
+private_subnet_2_id=$(aws ec2 create-subnet --vpc-id $vpc_id --cidr-block 10.0.3.0/24 --availability-zone us-west-2c --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=assign2_private_Subnet2}]' --query 'Subnet.SubnetId' --output text)
+echo "Created private subnet 2: $private_subnet_2_id"
+
+# Create internet gateway
+gateway_id=$(aws ec2 create-internet-gateway --tag-specifications 'ResourceType=internet-gateway,Tags=[{Key=Name,Value=igw}]' --query 'InternetGateway.InternetGatewayId' --output text)
+aws ec2 attach-internet-gateway --vpc-id $vpc_id --internet-gateway-id $gateway_id
+echo "Created internet gateway: $gateway_id"
+
+# Create route table
+route_table_id=$(aws ec2 create-route-table --vpc-id $vpc_id --tag-specifications 'ResourceType=route-table,Tags=[{Key=Name,Value=rt}]' --query 'RouteTable.RouteTableId' --output text)
+aws ec2 associate-route-table --route-table-id $route_table_id --subnet-id $public_subnet_id
+aws ec2 create-route --route-table-id $route_table_id --destination-cidr-block 0.0.0.0/0 --gateway-id $gateway_id
+echo "Created route table: $route_table_id"
+
+# Create security groups
+ec2_sg_id=$(aws ec2 create-security-group --group-name assign2-ec2-sg --description "Security group for EC2 instance" --vpc-id $vpc_id --tag-specifications 'ResourceType=security-group,Tags=[{Key=Name,Value=assign2-ec2-sg}]' --query 'GroupId' --output text)
+rds_sg_id=$(aws ec2 create-security-group --group-name assign2-rds-sg --description "Security group for RDS database" --vpc-id $vpc_id --tag-specifications 'ResourceType=security-group,Tags=[{Key=Name,Value=assign2-rds-sg}]' --query 'GroupId' --output text)
+echo "Created security groups: ec2-sg ($ec2_sg_id), rds-sg ($rds_sg_id)"
+
+# SG for EC2 instance
+aws ec2 authorize-security-group-ingress --group-id $ec2_sg_id --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id $ec2_sg_id --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+# SG for rds
+aws ec2 authorize-security-group-ingress --group-id $rds_sg_id --protocol tcp --port 3306 --cidr 10.0.0.0/16 --source-group $rds_sg_id
+
+# SSH key 
+ssh_key=bookstack
+
+echo "Creating SSH key..."
+aws ec2 create-key-pair --key-name $ssh_key --query 'KeyMaterial' --output text > $ssh_key.pem
+sudo chmod 400 $ssh_key.pem
+
+# Create EC2 instance
+echo "Creating EC2 instance..."
+instance_id=$(aws ec2 run-instances \
+        --image-id ami-0735c191cf914754d  \
+        --instance-type t2.micro \
+        --key-name $ssh_key \
+        --subnet-id $public_subnet_id \
+        --security-group-ids $ec2_sg_id \
+        --associate-public-ip-address \
+        --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=bookstack_instances}]' \
+        --query 'Instances[0].InstanceId' --output text)
+echo "Created EC2 instance: $instance_id"
+
+# Create subnet group for RDS database
+subnet_group_name="rds-subnet-group"
+aws rds create-db-subnet-group --db-subnet-group-name $subnet_group_name --db-subnet-group-description "Subnet group for RDS database" --subnet-ids $private_subnet_1_id $private_subnet_2_id
+echo "Created subnet group for RDS database: $subnet_group_name"
+
+# Create RDS database
+echo "Creating RDS database..."
+aws rds create-db-instance \
+--db-instance-identifier my-rds-instance \
+--db-instance-class db.t2.micro \
+--engine mysql \
+--allocated-storage 20 \
+--db-name bookstack \
+--master-username bookstack \
+--master-user-password password \
+--vpc-security-group-ids $rds_sg_id \
+--db-subnet-group-name $subnet_group_name 
+echo "Created RDS database: my-rds-db"
+
+
+rds_endpoint=$(aws rds describe-db-instances --db-instance-identifier my-rds-instance --query 'DBInstances[0].Endpoint.Address' --output text)
+echo "RDS endpoint: $rds_endpoint"
+#ec2_public_ip=$(aws ec2 describe-instances --instance-ids $instance_id --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
+
+
+echo "Infrastructure has been setup"
+
+function describe_resources() {
+  read -p "Do you want to describe AWS resources? (y/n) " answer
+  case $answer in
+    [yY])
+      aws ec2 describe-vpcs --filters "Name=tag:Name,Values=assign2_VPC"
+      aws ec2 describe-subnets --filters "Name=vpc-id,Values=$vpc_id" "Name=tag:Name,Values=assign2_public_Subnet"
+      aws ec2 describe-subnets --filters "Name=vpc-id,Values=$vpc_id" "Name=tag:Name,Values=assign2_private_Subnet1"
+      aws ec2 describe-subnets --filters "Name=vpc-id,Values=$vpc_id" "Name=tag:Name,Values=assign2_private_Subnet2"
+      aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=$vpc_id"
+      aws ec2 describe-route-tables --filters "Name=vpc-id,Values=$vpc_id"
+      aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$vpc_id" "Name=tag:Name,Values=assign2-ec2-sg"
+      aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$vpc_id" "Name=tag:Name,Values=assign2-rds-sg"
+      aws ec2 describe-instances --filters "Name=vpc-id,Values=$vpc_id" "Name=instance-state-name,Values=running"
+      aws rds describe-db-instances --filters "Name=db-instance-id,Values=my-rds-instance"
+      ;;
+    [nN])
+      echo "Exiting without describing resources."
+      ;;
+    *)
+      echo "Invalid input. Exiting without describing resources."
+      ;;
+  esac
+}
+
+describe_resources
+
+

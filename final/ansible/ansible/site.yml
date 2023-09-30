@@ -1,0 +1,20 @@
+---
+# Role to setup the database server
+- name: Roles for the database servers
+  hosts: tag_Server_db_server
+  remote_user: ubuntu
+  become: true
+  roles:
+    - database
+
+
+# Role to setup the bookstack server
+# to be completed
+# Use a tag to target the appropriate ec2 instance
+- name: Roles for the bookstack servers
+  hosts: tag_Server_web_server
+  remote_user: ubuntu
+  become: true
+  roles:
+    - bookstack
+

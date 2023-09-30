@@ -1,0 +1,536 @@
+2023-04-12 10:35:28,600 p=21306 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 10:35:29,159 p=21306 u=daryush n=ansible | ERROR! the role 'bookstack' was not found in /home/daryush/Documents/ACIT_4640/final/ansible/ansible/roles:/home/daryush/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:/home/daryush/Documents/ACIT_4640/final/ansible/ansible
+
+The error appears to be in '/home/daryush/Documents/ACIT_4640/final/ansible/ansible/site.yml': line 19, column 7, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+  roles:
+    - bookstack
+      ^ here
+
+2023-04-12 10:47:42,955 p=22941 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 10:47:43,369 p=22941 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 10:47:43,379 p=22941 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 10:47:46,551 p=22941 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:47:46,571 p=22941 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 10:48:35,886 p=22941 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:48:35,891 p=22941 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 10:48:37,326 p=22941 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:48:37,331 p=22941 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 10:48:40,227 p=22941 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:48:40,234 p=22941 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 10:48:41,086 p=22941 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:48:41,090 p=22941 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 10:48:41,099 p=22941 u=daryush n=ansible | fatal: [ip-10-0-1-105.us-west-2.compute.internal]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'DB_PASS' is undefined. 'DB_PASS' is undefined\n\nThe error appears to be in '/home/daryush/Documents/ACIT_4640/final/ansible/ansible/roles/database/tasks/main.yml': line 33, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# to be completed\n- name: Create bookstack user\n  ^ here\n"}
+2023-04-12 10:48:41,100 p=22941 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 10:48:41,100 p=22941 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=5    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-04-12 10:49:33,868 p=23257 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 10:49:34,240 p=23257 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 10:49:34,246 p=23257 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 10:49:35,898 p=23257 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:49:35,916 p=23257 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 10:49:38,675 p=23257 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:49:38,680 p=23257 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 10:49:39,926 p=23257 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:49:39,942 p=23257 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 10:49:42,655 p=23257 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:49:42,667 p=23257 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 10:49:43,485 p=23257 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:49:43,497 p=23257 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 10:49:43,506 p=23257 u=daryush n=ansible | fatal: [ip-10-0-1-105.us-west-2.compute.internal]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'DB_PASS' is undefined. 'DB_PASS' is undefined\n\nThe error appears to be in '/home/daryush/Documents/ACIT_4640/final/ansible/ansible/roles/database/tasks/main.yml': line 33, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# to be completed\n- name: Create bookstack user\n  ^ here\n"}
+2023-04-12 10:49:43,507 p=23257 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 10:49:43,507 p=23257 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=5    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-04-12 10:51:44,698 p=23539 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 10:51:45,118 p=23539 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 10:51:45,125 p=23539 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 10:51:47,748 p=23539 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:51:47,763 p=23539 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 10:51:50,385 p=23539 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:51:50,395 p=23539 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 10:51:51,618 p=23539 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:51:51,631 p=23539 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 10:51:55,182 p=23539 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:51:55,196 p=23539 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 10:51:56,000 p=23539 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:51:56,012 p=23539 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 10:51:56,022 p=23539 u=daryush n=ansible | fatal: [ip-10-0-1-105.us-west-2.compute.internal]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: 'DB_PASS' is undefined. 'DB_PASS' is undefined\n\nThe error appears to be in '/home/daryush/Documents/ACIT_4640/final/ansible/ansible/roles/database/tasks/main.yml': line 33, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n# to be completed\n- name: Create bookstack user\n  ^ here\n"}
+2023-04-12 10:51:56,022 p=23539 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 10:51:56,022 p=23539 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=5    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-04-12 10:55:50,691 p=24085 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 10:55:51,109 p=24085 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 10:55:51,116 p=24085 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 10:55:53,680 p=24085 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:55:53,694 p=24085 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 10:55:56,285 p=24085 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:55:56,299 p=24085 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 10:55:57,519 p=24085 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:55:57,533 p=24085 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 10:56:00,696 p=24085 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:56:00,700 p=24085 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 10:56:01,502 p=24085 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:56:01,506 p=24085 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 10:56:02,252 p=24085 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 10:56:02,282 p=24085 u=daryush n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: tag_Server_bookstack_server
+
+2023-04-12 10:56:02,283 p=24085 u=daryush n=ansible | PLAY [Roles for the bookstack servers] ***************************************************************************************************************************************
+2023-04-12 10:56:02,283 p=24085 u=daryush n=ansible | skipping: no hosts matched
+2023-04-12 10:56:02,283 p=24085 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 10:56:02,283 p=24085 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:02:57,468 p=25080 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:02:57,939 p=25080 u=daryush n=ansible | ERROR! no module/action detected in task.
+
+The error appears to be in '/home/daryush/Documents/ACIT_4640/final/ansible/ansible/roles/bookstack/tasks/main.yml': line 37, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+# To be completed
+- name: Install BookStack Composer dependencies
+  ^ here
+
+2023-04-12 11:04:50,346 p=25278 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:04:50,717 p=25278 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 11:04:50,724 p=25278 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:04:53,177 p=25278 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:04:53,188 p=25278 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 11:04:55,746 p=25278 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:04:55,758 p=25278 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 11:04:56,951 p=25278 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:04:56,963 p=25278 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 11:04:59,727 p=25278 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:04:59,739 p=25278 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 11:05:00,541 p=25278 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:05:00,553 p=25278 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 11:05:01,270 p=25278 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:05:01,299 p=25278 u=daryush n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: tag_Server_bookstack_server
+
+2023-04-12 11:05:01,300 p=25278 u=daryush n=ansible | PLAY [Roles for the bookstack servers] ***************************************************************************************************************************************
+2023-04-12 11:05:01,300 p=25278 u=daryush n=ansible | skipping: no hosts matched
+2023-04-12 11:05:01,300 p=25278 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 11:05:01,300 p=25278 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=6    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:06:54,192 p=25757 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:06:54,531 p=25757 u=daryush n=ansible | {
+    "_meta": {
+        "hostvars": {
+            "ip-10-0-1-105.us-west-2.compute.internal": {
+                "ami_launch_index": 0,
+                "ansible_host": "35.90.12.125",
+                "architecture": "x86_64",
+                "block_device_mappings": [
+                    {
+                        "device_name": "/dev/sda1",
+                        "ebs": {
+                            "attach_time": "2023-04-12T17:26:49+00:00",
+                            "delete_on_termination": true,
+                            "status": "attached",
+                            "volume_id": "vol-04fe09607b88a3f6e"
+                        }
+                    }
+                ],
+                "capacity_reservation_specification": {
+                    "capacity_reservation_preference": "open"
+                },
+                "client_token": "terraform-20230412172404959300000002",
+                "cpu_options": {
+                    "core_count": 1,
+                    "threads_per_core": 1
+                },
+                "ebs_optimized": false,
+                "ena_support": true,
+                "enclave_options": {
+                    "enabled": false
+                },
+                "hibernation_options": {
+                    "configured": false
+                },
+                "hypervisor": "xen",
+                "image_id": "ami-0fcf52bcf5db7b003",
+                "instance_id": "i-0851b34d173f238cd",
+                "instance_type": "t2.micro",
+                "key_name": "AWS_Key",
+                "launch_time": "2023-04-12T17:26:48+00:00",
+                "maintenance_options": {
+                    "auto_recovery": "default"
+                },
+                "metadata_options": {
+                    "http_endpoint": "enabled",
+                    "http_protocol_ipv6": "disabled",
+                    "http_put_response_hop_limit": 1,
+                    "http_tokens": "optional",
+                    "instance_metadata_tags": "disabled",
+                    "state": "applied"
+                },
+                "monitoring": {
+                    "state": "disabled"
+                },
+                "network_interfaces": [
+                    {
+                        "association": {
+                            "ip_owner_id": "amazon",
+                            "public_dns_name": "",
+                            "public_ip": "35.90.12.125"
+                        },
+                        "attachment": {
+                            "attach_time": "2023-04-12T17:26:48+00:00",
+                            "attachment_id": "eni-attach-00832c76828a5ff14",
+                            "delete_on_termination": true,
+                            "device_index": 0,
+                            "network_card_index": 0,
+                            "status": "attached"
+                        },
+                        "description": "",
+                        "groups": [
+                            {
+                                "group_id": "sg-0ca30b2d83221d073",
+                                "group_name": "allow_ssh"
+                            }
+                        ],
+                        "interface_type": "interface",
+                        "ipv6_addresses": [],
+                        "mac_address": "02:63:7f:c7:1a:37",
+                        "network_interface_id": "eni-0d964be46790ef2d5",
+                        "owner_id": "925738010690",
+                        "private_ip_address": "10.0.1.105",
+                        "private_ip_addresses": [
+                            {
+                                "association": {
+                                    "ip_owner_id": "amazon",
+                                    "public_dns_name": "",
+                                    "public_ip": "35.90.12.125"
+                                },
+                                "primary": true,
+                                "private_ip_address": "10.0.1.105"
+                            }
+                        ],
+                        "source_dest_check": true,
+                        "status": "in-use",
+                        "subnet_id": "subnet-07b94defe592496d3",
+                        "vpc_id": "vpc-0734663c6db61cc9c"
+                    }
+                ],
+                "owner_id": "925738010690",
+                "placement": {
+                    "availability_zone": "us-west-2a",
+                    "group_name": "",
+                    "region": "us-west-2",
+                    "tenancy": "default"
+                },
+                "platform_details": "Linux/UNIX",
+                "private_dns_name": "ip-10-0-1-105.us-west-2.compute.internal",
+                "private_dns_name_options": {
+                    "enable_resource_name_dns_a_record": false,
+                    "enable_resource_name_dns_aaaa_record": false,
+                    "hostname_type": "ip-name"
+                },
+                "private_ip_address": "10.0.1.105",
+                "product_codes": [],
+                "public_dns_name": "",
+                "public_ip_address": "35.90.12.125",
+                "requester_id": "",
+                "reservation_id": "r-0c2c5e16597476076",
+                "root_device_name": "/dev/sda1",
+                "root_device_type": "ebs",
+                "security_groups": [
+                    {
+                        "group_id": "sg-0ca30b2d83221d073",
+                        "group_name": "allow_ssh"
+                    }
+                ],
+                "source_dest_check": true,
+                "state": {
+                    "code": 16,
+                    "name": "running"
+                },
+                "state_transition_reason": "",
+                "subnet_id": "subnet-07b94defe592496d3",
+                "tags": {
+                    "Name": "ubuntu-db",
+                    "Server": "db-server"
+                },
+                "usage_operation": "RunInstances",
+                "usage_operation_update_time": "2023-04-12T17:26:48+00:00",
+                "virtualization_type": "hvm",
+                "vpc_id": "vpc-0734663c6db61cc9c"
+            },
+            "ip-10-0-1-164.us-west-2.compute.internal": {
+                "ami_launch_index": 0,
+                "ansible_host": "34.221.178.188",
+                "architecture": "x86_64",
+                "block_device_mappings": [
+                    {
+                        "device_name": "/dev/sda1",
+                        "ebs": {
+                            "attach_time": "2023-04-12T17:26:49+00:00",
+                            "delete_on_termination": true,
+                            "status": "attached",
+                            "volume_id": "vol-00acdabee723d4337"
+                        }
+                    }
+                ],
+                "capacity_reservation_specification": {
+                    "capacity_reservation_preference": "open"
+                },
+                "client_token": "terraform-20230412172404958100000001",
+                "cpu_options": {
+                    "core_count": 1,
+                    "threads_per_core": 1
+                },
+                "ebs_optimized": false,
+                "ena_support": true,
+                "enclave_options": {
+                    "enabled": false
+                },
+                "hibernation_options": {
+                    "configured": false
+                },
+                "hypervisor": "xen",
+                "image_id": "ami-0fcf52bcf5db7b003",
+                "instance_id": "i-08e9a26014892aec1",
+                "instance_type": "t2.micro",
+                "key_name": "AWS_Key",
+                "launch_time": "2023-04-12T17:26:48+00:00",
+                "maintenance_options": {
+                    "auto_recovery": "default"
+                },
+                "metadata_options": {
+                    "http_endpoint": "enabled",
+                    "http_protocol_ipv6": "disabled",
+                    "http_put_response_hop_limit": 1,
+                    "http_tokens": "optional",
+                    "instance_metadata_tags": "disabled",
+                    "state": "applied"
+                },
+                "monitoring": {
+                    "state": "disabled"
+                },
+                "network_interfaces": [
+                    {
+                        "association": {
+                            "ip_owner_id": "amazon",
+                            "public_dns_name": "",
+                            "public_ip": "34.221.178.188"
+                        },
+                        "attachment": {
+                            "attach_time": "2023-04-12T17:26:48+00:00",
+                            "attachment_id": "eni-attach-02d757770570587ba",
+                            "delete_on_termination": true,
+                            "device_index": 0,
+                            "network_card_index": 0,
+                            "status": "attached"
+                        },
+                        "description": "",
+                        "groups": [
+                            {
+                                "group_id": "sg-0ca30b2d83221d073",
+                                "group_name": "allow_ssh"
+                            }
+                        ],
+                        "interface_type": "interface",
+                        "ipv6_addresses": [],
+                        "mac_address": "02:9b:53:a3:0d:d3",
+                        "network_interface_id": "eni-004f7d6c09fdcb433",
+                        "owner_id": "925738010690",
+                        "private_ip_address": "10.0.1.164",
+                        "private_ip_addresses": [
+                            {
+                                "association": {
+                                    "ip_owner_id": "amazon",
+                                    "public_dns_name": "",
+                                    "public_ip": "34.221.178.188"
+                                },
+                                "primary": true,
+                                "private_ip_address": "10.0.1.164"
+                            }
+                        ],
+                        "source_dest_check": true,
+                        "status": "in-use",
+                        "subnet_id": "subnet-07b94defe592496d3",
+                        "vpc_id": "vpc-0734663c6db61cc9c"
+                    }
+                ],
+                "owner_id": "925738010690",
+                "placement": {
+                    "availability_zone": "us-west-2a",
+                    "group_name": "",
+                    "region": "us-west-2",
+                    "tenancy": "default"
+                },
+                "platform_details": "Linux/UNIX",
+                "private_dns_name": "ip-10-0-1-164.us-west-2.compute.internal",
+                "private_dns_name_options": {
+                    "enable_resource_name_dns_a_record": false,
+                    "enable_resource_name_dns_aaaa_record": false,
+                    "hostname_type": "ip-name"
+                },
+                "private_ip_address": "10.0.1.164",
+                "product_codes": [],
+                "public_dns_name": "",
+                "public_ip_address": "34.221.178.188",
+                "requester_id": "",
+                "reservation_id": "r-09188507a2f4efa87",
+                "root_device_name": "/dev/sda1",
+                "root_device_type": "ebs",
+                "security_groups": [
+                    {
+                        "group_id": "sg-0ca30b2d83221d073",
+                        "group_name": "allow_ssh"
+                    }
+                ],
+                "source_dest_check": true,
+                "state": {
+                    "code": 16,
+                    "name": "running"
+                },
+                "state_transition_reason": "",
+                "subnet_id": "subnet-07b94defe592496d3",
+                "tags": {
+                    "Name": "ubuntu-web",
+                    "Server": "web-server"
+                },
+                "usage_operation": "RunInstances",
+                "usage_operation_update_time": "2023-04-12T17:26:48+00:00",
+                "virtualization_type": "hvm",
+                "vpc_id": "vpc-0734663c6db61cc9c"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "aws_ec2",
+            "tag_Name_ubuntu_db",
+            "tag_Server_db_server",
+            "tag_Name_ubuntu_web",
+            "tag_Server_web_server"
+        ]
+    },
+    "aws_ec2": {
+        "hosts": [
+            "ip-10-0-1-105.us-west-2.compute.internal",
+            "ip-10-0-1-164.us-west-2.compute.internal"
+        ]
+    },
+    "tag_Name_ubuntu_db": {
+        "hosts": [
+            "ip-10-0-1-105.us-west-2.compute.internal"
+        ]
+    },
+    "tag_Name_ubuntu_web": {
+        "hosts": [
+            "ip-10-0-1-164.us-west-2.compute.internal"
+        ]
+    },
+    "tag_Server_db_server": {
+        "hosts": [
+            "ip-10-0-1-105.us-west-2.compute.internal"
+        ]
+    },
+    "tag_Server_web_server": {
+        "hosts": [
+            "ip-10-0-1-164.us-west-2.compute.internal"
+        ]
+    }
+}
+2023-04-12 11:07:34,101 p=25943 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:07:34,459 p=25943 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 11:07:34,466 p=25943 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:07:36,855 p=25943 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:07:36,866 p=25943 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 11:07:39,396 p=25943 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:07:39,401 p=25943 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 11:07:40,605 p=25943 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:07:40,618 p=25943 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 11:07:42,757 p=25943 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:07:42,763 p=25943 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 11:07:43,569 p=25943 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:07:43,573 p=25943 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 11:07:44,305 p=25943 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:07:44,335 p=25943 u=daryush n=ansible | PLAY [Roles for the bookstack servers] ***************************************************************************************************************************************
+2023-04-12 11:07:44,341 p=25943 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:07:47,202 p=25943 u=daryush n=ansible | ok: [ip-10-0-1-164.us-west-2.compute.internal]
+2023-04-12 11:07:47,218 p=25943 u=daryush n=ansible | TASK [bookstack : Install package requirements for bookstack] ****************************************************************************************************************
+2023-04-12 11:08:59,967 p=25943 u=daryush n=ansible | changed: [ip-10-0-1-164.us-west-2.compute.internal]
+2023-04-12 11:08:59,970 p=25943 u=daryush n=ansible | TASK [bookstack : Clone BookStack repository] ********************************************************************************************************************************
+2023-04-12 11:09:00,737 p=25943 u=daryush n=ansible | fatal: [ip-10-0-1-164.us-west-2.compute.internal]: FAILED! => {"changed": false, "msg": "the destination directory must be specified unless clone=no"}
+2023-04-12 11:09:00,738 p=25943 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 11:09:00,738 p=25943 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=6    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:09:00,739 p=25943 u=daryush n=ansible | ip-10-0-1-164.us-west-2.compute.internal : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:10:26,972 p=26656 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:10:27,383 p=26656 u=daryush n=ansible | ERROR! We were unable to read either as JSON nor YAML, these are the errors we got from each:
+JSON: Expecting value: line 1 column 1 (char 0)
+
+Syntax Error while loading YAML.
+  found unacceptable key (unhashable type: 'AnsibleMapping')
+
+The error appears to be in '/home/daryush/Documents/ACIT_4640/final/ansible/ansible/roles/bookstack/tasks/main.yml': line 30, column 12, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+    repo: https://github.com/BookStackApp/BookStack.git
+    dest: {{ BOOKSTACK_DIR }}
+           ^ here
+We could be wrong, but this one looks like it might be an issue with
+missing quotes. Always quote template expression brackets when they
+start a value. For instance:
+
+    with_items:
+      - {{ foo }}
+
+Should be written as:
+
+    with_items:
+      - "{{ foo }}"
+
+2023-04-12 11:10:42,697 p=26727 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:10:43,125 p=26727 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 11:10:43,132 p=26727 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:10:45,501 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:10:45,513 p=26727 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 11:10:48,324 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:10:48,330 p=26727 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 11:10:49,535 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:10:49,546 p=26727 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 11:10:51,767 p=26727 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:10:51,780 p=26727 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 11:10:52,587 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:10:52,599 p=26727 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 11:10:53,296 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:10:53,315 p=26727 u=daryush n=ansible | PLAY [Roles for the bookstack servers] ***************************************************************************************************************************************
+2023-04-12 11:10:53,321 p=26727 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:10:56,024 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-164.us-west-2.compute.internal]
+2023-04-12 11:10:56,044 p=26727 u=daryush n=ansible | TASK [bookstack : Install package requirements for bookstack] ****************************************************************************************************************
+2023-04-12 11:10:58,630 p=26727 u=daryush n=ansible | ok: [ip-10-0-1-164.us-west-2.compute.internal]
+2023-04-12 11:10:58,634 p=26727 u=daryush n=ansible | TASK [bookstack : Clone BookStack repository] ********************************************************************************************************************************
+2023-04-12 11:11:03,668 p=26727 u=daryush n=ansible | [WARNING]: Ignoring depth argument. Shallow clones are only available for HEAD, branches, tags or in combination with refspec.
+
+2023-04-12 11:11:03,668 p=26727 u=daryush n=ansible | fatal: [ip-10-0-1-164.us-west-2.compute.internal]: FAILED! => {"changed": false, "cmd": "/usr/bin/git checkout --force None", "msg": "Failed to checkout None", "rc": 1, "stderr": "error: pathspec 'None' did not match any file(s) known to git\n", "stderr_lines": ["error: pathspec 'None' did not match any file(s) known to git"], "stdout": "", "stdout_lines": []}
+2023-04-12 11:11:03,669 p=26727 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 11:11:03,669 p=26727 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=6    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:11:03,669 p=26727 u=daryush n=ansible | ip-10-0-1-164.us-west-2.compute.internal : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:11:40,671 p=27027 u=daryush n=botocore.credentials | Found credentials in shared credentials file: ~/.aws/credentials
+2023-04-12 11:11:41,055 p=27027 u=daryush n=ansible | PLAY [Roles for the database servers] ****************************************************************************************************************************************
+2023-04-12 11:11:41,062 p=27027 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:11:42,639 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:11:42,655 p=27027 u=daryush n=ansible | TASK [database : Install mysql packages] *************************************************************************************************************************************
+2023-04-12 11:11:45,428 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:11:45,436 p=27027 u=daryush n=ansible | TASK [database : Copy mysql conf to server] **********************************************************************************************************************************
+2023-04-12 11:11:46,637 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:11:46,647 p=27027 u=daryush n=ansible | TASK [database : Restart mysql service] **************************************************************************************************************************************
+2023-04-12 11:11:49,105 p=27027 u=daryush n=ansible | changed: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:11:49,112 p=27027 u=daryush n=ansible | TASK [database : Create bookstack database] **********************************************************************************************************************************
+2023-04-12 11:11:49,920 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:11:49,932 p=27027 u=daryush n=ansible | TASK [database : Create bookstack user] **************************************************************************************************************************************
+2023-04-12 11:11:50,657 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-105.us-west-2.compute.internal]
+2023-04-12 11:11:50,677 p=27027 u=daryush n=ansible | PLAY [Roles for the bookstack servers] ***************************************************************************************************************************************
+2023-04-12 11:11:50,683 p=27027 u=daryush n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************
+2023-04-12 11:11:52,161 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-164.us-west-2.compute.internal]
+2023-04-12 11:11:52,178 p=27027 u=daryush n=ansible | TASK [bookstack : Install package requirements for bookstack] ****************************************************************************************************************
+2023-04-12 11:11:54,744 p=27027 u=daryush n=ansible | ok: [ip-10-0-1-164.us-west-2.compute.internal]
+2023-04-12 11:11:54,748 p=27027 u=daryush n=ansible | TASK [bookstack : Clone BookStack repository] ********************************************************************************************************************************
+2023-04-12 11:11:58,399 p=27027 u=daryush n=ansible | fatal: [ip-10-0-1-164.us-west-2.compute.internal]: FAILED! => {"changed": false, "cmd": "/usr/bin/git checkout --force None", "msg": "Failed to checkout None", "rc": 1, "stderr": "error: pathspec 'None' did not match any file(s) known to git\n", "stderr_lines": ["error: pathspec 'None' did not match any file(s) known to git"], "stdout": "", "stdout_lines": []}
+2023-04-12 11:11:58,400 p=27027 u=daryush n=ansible | PLAY RECAP *******************************************************************************************************************************************************************
+2023-04-12 11:11:58,400 p=27027 u=daryush n=ansible | ip-10-0-1-105.us-west-2.compute.internal : ok=6    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2023-04-12 11:11:58,400 p=27027 u=daryush n=ansible | ip-10-0-1-164.us-west-2.compute.internal : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   

@@ -1,0 +1,39 @@
+---
+# Install necessary packages
+- name: Install mysql packages
+  apt:
+    name: 
+      - mysql-server
+      - python3-pymysql
+    update_cache: yes
+
+# Copy the mysql config file
+# This will overwrite the default file
+# This makes the database accessible from other servers, changes bind: 127.0.0.1 to bind: 0.0.0.0
+- name: Copy mysql conf to server
+  copy:
+    src: ../files/mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# Restart the mysql service after changing config file above
+- name: Restart mysql service
+  service:
+    name: mysql
+    state: restarted
+
+# Create a bookstack database
+- name: Create bookstack database
+  community.mysql.mysql_db:
+    name: "{{ DB_NAME }}"
+    state: present
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+# Create a bookstack user
+# to be completed
+- name: Create bookstack user
+  community.mysql.mysql_user:
+    name: "{{ DB_USER }}"
+    password: "{{ DB_PASSWORD }}"
+    host: localhost
+    priv: 'bookstack.*:ALL,GRANT'
+    login_unix_socket: /run/mysqld/mysqld.sock

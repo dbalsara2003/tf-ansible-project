@@ -1,0 +1,101 @@
+---
+# Install the necessary packages
+- name: Install package requirements for bookstack
+  tags: apache, bookstack
+  apt:
+    name:
+      - git 
+      - unzip 
+      - apache2 
+      - php8.1
+      - curl 
+      - php8.1-curl 
+      - php8.1-mbstring 
+      - php8.1-ldap
+      - php8.1-xml
+      - php8.1-zip 
+      - php8.1-gd
+      - php8.1-mysql 
+      - mysql-server-8.0 
+      - libapache2-mod-php8.1
+      - composer
+    update_cache: yes
+
+# Clone the bookstack repository
+# To be completed
+- name: Clone BookStack repository
+  tags: git
+  git:
+    repo: https://github.com/BookStackApp/BookStack.git
+    dest: "/var/www/bookstack"
+    version:
+    depth: 1
+    single_branch: true
+
+# Install the bookstack dependencies with Composer.
+# To be completed
+- name: Install BookStack Composer dependencies
+  tags: bookstack
+  shell: |
+    cd {{ BOOKSTACK_DIR }}
+    php /usr/bin/composer install --no-dev --no-plugins
+
+# Create .env file from template
+# To be completed
+- name: create .env file from template
+  tags: bookstack
+  template:
+    src: ../files/env.j2
+    dest: "{{ BOOKSTACK_DIR }}/.env"
+
+# Generate application key
+- name: generate application key
+  tags: bookstack
+  shell: |
+    cd {{ BOOKSTACK_DIR }}
+    php artisan key:generate --no-interaction --force
+    php artisan migrate --no-interaction --force
+
+# Change file permissions in bookstack directory
+- name: change permissions
+  tags: bookstack
+  shell: |
+    cd {{ BOOKSTACK_DIR }}
+    chown -R root:www-data ./
+    chmod -R 755 ./
+    chmod -R 775 bootstrap/cache public/uploads storage
+    git config core.fileMode false
+
+# Enable apache modules
+# To be completed
+- name: enable apache modules
+  tags: apache
+  shell: |
+    a2enmod rewrite
+    a2enmod headers
+    a2enmod proxy
+    a2enmod proxy_http
+    a2enmod proxy_wstunnel
+
+# Create apache config file from template
+# To be completed
+- name: create apache config
+  tags: apache
+  template:
+    src: ../files/bookstack.conf.j2
+    dest: /etc/apache2/sites-available/bookstack.conf
+
+# Enable the bookstack apache config
+- name: disable default apache config and enable bookstack conf
+  tags: apache
+  shell: |
+    a2dissite 000-default.conf
+    a2ensite bookstack.conf
+
+# Restart apache service
+# To be completed
+- name: Restart Apache service
+  tags: apache
+  service:
+    name: apache2
+    state: restarted

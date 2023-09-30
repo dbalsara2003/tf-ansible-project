@@ -1,0 +1,9 @@
+---
+DOMAIN: 34.221.178.188
+APP_URL: "http://{{ DOMAIN }}"
+DB_DATABASE: bookstack
+DB_USERNAME: bookstack
+DB_PASSWORD: password
+DB_HOST: 35.90.12.125
+BOOKSTACK_DIR: /var/www/bookstack 
+...

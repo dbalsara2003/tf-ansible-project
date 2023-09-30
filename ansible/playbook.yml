@@ -1,0 +1,45 @@
+---
+- name: install nginx and mysql
+  hosts: ec2_instance
+  become: true
+
+  tasks:
+  - name: install python
+    apt: 
+      name: python3 
+      state: latest
+
+  - name: ensure nginx is installed
+    package:
+      name: nginx
+      state: present
+      update_cache: true
+
+  - name: install mysql
+    apt: 
+      name: mysql-client 
+      state: latest
+  
+  - name: copy html page
+    copy:
+      src: "index.html"
+      dest: /var/www/html/index.html
+
+  - name: copy nginx config
+    copy:
+      src: "nginx.conf" 
+      dest: /etc/nginx/sites-available/default
+
+  - name: enable configuration
+    file:
+      src: /etc/nginx/sites-available/default
+      dest: /etc/nginx/sites-enabled/default
+      state: link
+
+  - name: restart nginx
+    service:
+      name: nginx
+      state: restarted
+
+
+

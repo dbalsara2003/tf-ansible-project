@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TOKEN=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
+CREDENTIALS=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/${TOKEN})
+AWS_ACCESS_KEY_ID=$(echo ${CREDENTIALS} | jq -r '.AccessKeyId')
+AWS_SECRET_ACCESS_KEY=$(echo ${CREDENTIALS} | jq -r '.SecretAccessKey')
+AWS_SESSION_TOKEN=$(echo ${CREDENTIALS} | jq -r '.Token')
+
+ENDPOINT=$(aws rds describe-db-instances --db-instance-identifier your-db-instance-id --query 'DBInstances[0].Endpoint.Address' --output text)
+echo ${ENDPOINT}

@@ -1,0 +1,11 @@
+exam_vpc_id=vpc-02494128709429045
+exam_web_subnet_id=subnet-0583ac490bde9ef7a
+exam_private_subnet_id=subnet-02a2a93a52b9ac89f
+exam_gateway_id=igw-085d05522e8ddb913
+exam_route_table_id=rtb-0c2bb3e3c1d4a9b62
+exam_web_security_group_id=sg-0d291dd9327f50343
+exam_private_security_group_id=sg-051fc780987edf88c
+exam_web_ec2_id=
+exam_web_ec2_public_ip=
+exam_db_ec2_id=
+exam_db_ec2_private_ip=

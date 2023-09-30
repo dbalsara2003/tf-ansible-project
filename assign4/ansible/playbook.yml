@@ -1,0 +1,16 @@
+- name: Setup servers
+  hosts: aws_ec2
+  remote_user: ubuntu
+  become: True
+  
+  vars:
+    NODEJS_VERSION: "18"
+    ansible_distribution_release: "jammy"
+
+  roles: 
+    - nodejs
+    - nginx 
+    - app
+    
+
+  
